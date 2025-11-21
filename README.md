@@ -66,8 +66,33 @@ colcon build --packages-select rs_to_velodyne
 ```
 
 4. 设置环境变量：
+
+**临时设置（仅当前终端有效）：**
 ```bash
 source install/setup.bash
+```
+
+**永久设置（所有新终端自动生效）：**
+将以下内容添加到 `~/.bashrc` 文件末尾：
+```bash
+# ROS2 工作空间环境变量 (rs_to_velodyne)
+if [ -f ~/ros2_ws/install/setup.bash ]; then
+    source ~/ros2_ws/install/setup.bash
+fi
+```
+
+然后执行：
+```bash
+source ~/.bashrc
+```
+
+或者直接运行：
+```bash
+echo '# ROS2 工作空间环境变量 (rs_to_velodyne)
+if [ -f ~/ros2_ws/install/setup.bash ]; then
+    source ~/ros2_ws/install/setup.bash
+fi' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ### 运行
