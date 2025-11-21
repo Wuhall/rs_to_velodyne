@@ -13,6 +13,11 @@ find_package(std_msgs REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(pcl_ros REQUIRED)
 find_package(message_filters REQUIRED)
+
+# Set CMake policy for PCL_ROOT
+if(POLICY CMP0074)
+  cmake_policy(SET CMP0074 NEW)
+endif()
 find_package(PCL REQUIRED)
 
 # Set C++ standard

@@ -6,6 +6,7 @@
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
+#include <cmath>
 
 std::string output_type;
 
@@ -78,11 +79,10 @@ bool has_nan(T point) {
     // remove nan point, or the feature assocaion will crash, the surf point will containing nan points
     // pcl remove nan not work normally
     // ROS_ERROR("Containing nan point!");
-    if (pcl_isnan(point.x) || pcl_isnan(point.y) || pcl_isnan(point.z)) {
+    if (std::isnan(point.x) || std::isnan(point.y) || std::isnan(point.z)) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 template<typename T>
@@ -104,7 +104,7 @@ void rsHandler_XYZI(const sensor_msgs::msg::PointCloud2::SharedPtr pc_msg) {
     pcl::fromROSMsg(*pc_msg, *pc);
 
     // to new pointcloud
-    for (int point_id = 0; point_id < pc->points.size(); ++point_id) {
+    for (size_t point_id = 0; point_id < pc->points.size(); ++point_id) {
         if (has_nan(pc->points[point_id]))
             continue;
 
@@ -131,7 +131,7 @@ void handle_pc_msg(const typename pcl::PointCloud<T_in_p>::Ptr &pc_in,
                    const typename pcl::PointCloud<T_out_p>::Ptr &pc_out) {
 
     // to new pointcloud
-    for (int point_id = 0; point_id < pc_in->points.size(); ++point_id) {
+    for (size_t point_id = 0; point_id < pc_in->points.size(); ++point_id) {
         if (has_nan(pc_in->points[point_id]))
             continue;
         T_out_p new_point;
@@ -151,8 +151,8 @@ template<typename T_in_p, typename T_out_p>
 void add_ring(const typename pcl::PointCloud<T_in_p>::Ptr &pc_in,
               const typename pcl::PointCloud<T_out_p>::Ptr &pc_out) {
     // to new pointcloud
-    int valid_point_id = 0;
-    for (int point_id = 0; point_id < pc_in->points.size(); ++point_id) {
+    size_t valid_point_id = 0;
+    for (size_t point_id = 0; point_id < pc_in->points.size(); ++point_id) {
         if (has_nan(pc_in->points[point_id]))
             continue;
         // 跳过nan点
@@ -164,8 +164,8 @@ template<typename T_in_p, typename T_out_p>
 void add_time(const typename pcl::PointCloud<T_in_p>::Ptr &pc_in,
               const typename pcl::PointCloud<T_out_p>::Ptr &pc_out) {
     // to new pointcloud
-    int valid_point_id = 0;
-    for (int point_id = 0; point_id < pc_in->points.size(); ++point_id) {
+    size_t valid_point_id = 0;
+    for (size_t point_id = 0; point_id < pc_in->points.size(); ++point_id) {
         if (has_nan(pc_in->points[point_id]))
             continue;
         // 跳过nan点
