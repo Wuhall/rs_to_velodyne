@@ -111,7 +111,7 @@ ros2 run rs_to_velodyne rs_to_velodyne XYZIRT XYZI
 #### 2. XYZI 输入格式
 对于来自 `/rslidar_points` 的 **XYZI** 格式点云：
 ```bash
-ros2 run rs_to_velodyne rs_to_velodyne XYZI XYZIR
+ros2 run rs_to_velodyne rs_to_velodyne XYZI XYZIRT
 ```
 输出点云为 `/velodyne_points` 话题上的 **XYZIR** 格式点云（Velodyne格式）。
 
